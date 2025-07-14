@@ -1,12 +1,16 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-
+import { ShinyButton } from "@/components/magicui/shiny-button";
+import { signOut, useSession } from "next-auth/react";
 const Navbar = () => {
+  const { data: session, status } = useSession();
+  // console.log(session);
   const navMenu = (
     <>
       <li>
-        <Link href={"/home"}>Home</Link>
+        <Link href={"/"}>Home</Link>
       </li>
       <li>
         <Link href={"/about"}>about</Link>
@@ -62,8 +66,26 @@ const Navbar = () => {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{navMenu}</ul>
       </div>
-      <div className="navbar-end">
-        <a className="btn btn-outline">Appointment</a>
+      <div className="navbar-end space-x-2">
+        {status === "authenticated" ? (
+          <>
+            <button onClick={() => signOut()} className="btn">logout</button>
+          </>
+        ) : (
+          <>
+            <Link href={"/register"} className="border p-2 rounded-lg">
+              Register
+            </Link>
+            <Link href={"/login"} className="border p-2 rounded-lg">
+              Login
+            </Link>
+          </>
+        )}
+
+        {/* <Link href={"/"} className="border p-2 rounded-lg  outline-1 outline-orange-500 text-orange-500">
+          Apointment
+        </Link> */}
+        <ShinyButton>Apointment</ShinyButton>
       </div>
     </div>
   );
