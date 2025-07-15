@@ -1,9 +1,9 @@
 "use client";
 import { registerUser } from "@/app/actions/auth/registerUser";
+import SocialLogin from "@/app/login/components/SocialLogin";
 import { useRouter } from "next/navigation";
 import React from "react";
 import toast from "react-hot-toast";
-import { FaFacebookF, FaGoogle, FaLinkedinIn } from "react-icons/fa";
 const RegisterForm = () => {
   const router = useRouter();
   const handleSignUp = async (e) => {
@@ -60,17 +60,7 @@ const RegisterForm = () => {
         </button>
       </div>
       <p className="text-center my-4 font-semibold">or signup with</p>
-      <div className="flex justify-center space-x-4">
-        <p className="border p-2 rounded-full">
-          <FaFacebookF />
-        </p>
-        <p className="border p-2 rounded-full">
-          <FaLinkedinIn />
-        </p>
-        <p className="border p-2 rounded-full">
-          <FaGoogle />
-        </p>
-      </div>
+      <SocialLogin></SocialLogin>
     </form>
   );
 };

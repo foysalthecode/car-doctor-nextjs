@@ -23,7 +23,7 @@ const ServicesSection = async () => {
             className="items-center justify-center overflow-hidden space-y-1"
           >
             <BoxReveal boxColor={"#ef8a6a"} duration={0.5}>
-              <div className="relative w-64 h-40 overflow-hidden rounded-md">
+              <div className="relative w-72 h-44 overflow-hidden rounded-md">
                 <Image
                   src={item.img}
                   alt={item.title}

@@ -6,7 +6,7 @@ import { ShinyButton } from "@/components/magicui/shiny-button";
 import { signOut, useSession } from "next-auth/react";
 const Navbar = () => {
   const { data: session, status } = useSession();
-  // console.log(session);
+  // console.log(session?.user?.image);
   const navMenu = (
     <>
       <li>
@@ -69,7 +69,17 @@ const Navbar = () => {
       <div className="navbar-end space-x-2">
         {status === "authenticated" ? (
           <>
-            <button onClick={() => signOut()} className="btn">logout</button>
+            <Image
+              className="border border-orange-500 rounded-full"
+              src={session?.user?.image}
+              width={50}
+              height={50}
+              alt="user-logo"
+            />
+
+            <button onClick={() => signOut()} className="btn">
+              logout
+            </button>
           </>
         ) : (
           <>

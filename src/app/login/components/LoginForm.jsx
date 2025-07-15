@@ -3,7 +3,7 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React from "react";
 import toast from "react-hot-toast";
-import { FaFacebookF, FaGoogle, FaLinkedinIn } from "react-icons/fa";
+import SocialLogin from "./SocialLogin";
 const LoginForm = () => {
   const router = useRouter();
   const handleLogin = async (e) => {
@@ -62,17 +62,7 @@ const LoginForm = () => {
         </button>
       </div>
       <p className="text-center my-4 font-semibold">or login with</p>
-      <div className="flex justify-center space-x-4">
-        <p className="border p-2 rounded-full">
-          <FaFacebookF />
-        </p>
-        <p className="border p-2 rounded-full">
-          <FaLinkedinIn />
-        </p>
-        <p className="border p-2 rounded-full">
-          <FaGoogle />
-        </p>
-      </div>
+      <SocialLogin></SocialLogin>
     </form>
   );
 };
