@@ -2,6 +2,7 @@ import LoginUser from "@/app/actions/auth/LoginUser";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
+import dbConnect, { collectionNameObj } from "./dbConnect";
 
 export const authOptions = {
   // Configure one or more authentication providers
@@ -51,16 +52,28 @@ export const authOptions = {
   },
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
-      console.log("From authoptions", {
-        user,
-        account,
-        profile,
-        email,
-        credentials,
-      });
+      //   console.log("From authoptions", {
+      //     user,
+      //     account,
+      //     profile,
+      //     email,
+      //     credentials,
+      //   });
       if (account) {
         const { providerAccountId, provider } = account;
         const { email: user_email, image, name } = user;
+        const userCollection = dbConnect(collectionNameObj.userCollection);
+        const isUserExist = await userCollection.findOne({ providerAccountId });
+        if (!isUserExist) {
+          const payload = {
+            providerAccountId,
+            provider,
+            email: user_email,
+            image,
+            name,
+          };
+          await userCollection.insertOne(payload);
+        }
       }
       return true;
     },
