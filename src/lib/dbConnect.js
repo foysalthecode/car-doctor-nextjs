@@ -4,6 +4,7 @@ const uri = process.env.MONGOURI;
 export const collectionNameObj = {
   services: "services",
   userCollection: "users",
+  bookingCollection: "mybooking",
 };
 
 const dbConnect = (collectionName) => {

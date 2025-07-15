@@ -1,14 +1,13 @@
 import ServiceSectionReuse from "@/app/reuseComponents/ServiceSectionReuse";
-import dbConnect, { collectionNameObj } from "@/lib/dbConnect";
-import { ObjectId } from "mongodb";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import { IoMdArrowRoundForward } from "react-icons/io";
 
 const ServiceDetailsPage = async ({ params }) => {
   const p = await params;
-  const serviceCollection = dbConnect(collectionNameObj.services);
-  const data = await serviceCollection.findOne({ _id: new ObjectId(p.id) });
+  const res = await fetch(`http://localhost:3000/api/service/${p.id}`);
+  const data = await res.json();
   const buttons = [
     { name: "Full Car Repair" },
     { name: "Engine Repair" },
@@ -29,8 +28,9 @@ const ServiceDetailsPage = async ({ params }) => {
             height={50}
           />
           <h1 className="font-bold text-4xl my-2">{data.title}</h1>
+          <p>{data.description}</p>
         </div>
-        <div className="rounded-lg w-1/3 p-9 bg-gray-100">
+        <div className="rounded-lg w-1/3 h-fit p-9 bg-gray-100">
           <p className="font-bold text-2xl my-1.5">Service</p>
           <div className="flex flex-col space-y-4">
             {buttons.map((button, idx) => {
@@ -46,6 +46,17 @@ const ServiceDetailsPage = async ({ params }) => {
                 </div>
               );
             })}
+          </div>
+          <div className="border-2 border-orange-500 rounded-sm p-3 my-4">
+            <Link
+              href={`/checkout/${data._id}`}
+              className="p-2 group bg-white rounded-xs w-full flex items-center font-semibold
+                    justify-between hover:bg-orange-500 hover:text-white transition-all duration-300"
+            >
+              check out
+              <IoMdArrowRoundForward className="group-hover:translate-x-1.5 group-hover:text-white transition-transform duration-300 text-xl text-orange-400" />
+            </Link>
+            <p className="font-bold text-center my-2">Price: ${data.price}</p>
           </div>
         </div>
       </section>
