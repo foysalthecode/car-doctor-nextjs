@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 
 const BookingUpdateForm = ({ data }) => {
   console.log(data);
-  // const router = useRouter();
+  const router = useRouter();
   const { data: session } = useSession();
   const [loading, setLoading] = useState(false);
   const handleUpdateBooking = async (e) => {
@@ -37,7 +37,8 @@ const BookingUpdateForm = ({ data }) => {
       const postedData = await res.json();
       setLoading(false);
       // console.log(postedData);
-      // router.push("/my-bookings");
+      toast.success("Updated Succefully");
+      router.push("/my-bookings");
     } catch (err) {
       console.log(err);
     }
@@ -45,7 +46,7 @@ const BookingUpdateForm = ({ data }) => {
   return (
     <div className="w-10/12 mx-auto border p-5 my-5">
       <h1 className="text-center text-4xl font-bold my-4">
-        My Bookings : {data?.title}
+        My Bookings : {data?.service_name}
       </h1>
       <form onSubmit={handleUpdateBooking}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -130,7 +131,7 @@ const BookingUpdateForm = ({ data }) => {
               type="submit"
               className="w-full border p-2 rounded-lg my-4 font-bold bg-orange-400 text-white cursor-pointer hover:bg-orange-600 transition-all duration-300"
             >
-              Confirm Order
+              Update
             </button>
           </>
         )}

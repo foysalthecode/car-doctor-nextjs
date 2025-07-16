@@ -2,11 +2,11 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 const CheckOutForm = ({ data }) => {
   //   console.log(data);
-  // const router = useRouter();
+  const router = useRouter();
   const { data: session } = useSession();
   const [loading, setLoading] = useState(false);
   const handleBookService = async (e) => {
@@ -36,10 +36,21 @@ const CheckOutForm = ({ data }) => {
       });
       const postedData = await res.json();
       setLoading(false);
-      toast.success("Order Confirmed");
       form.reset();
+      Swal.fire({
+        title: "Order Confirmed",
+        text: "checkout your booking?",
+        icon: "success",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "My Bookings",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          router.push("/my-bookings");
+        }
+      });
       // console.log(postedData);
-      // router.push("/my-bookings");
     } catch (err) {
       console.log(err);
     }

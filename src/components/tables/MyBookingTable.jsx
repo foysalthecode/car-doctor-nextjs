@@ -18,6 +18,8 @@ const MyBookingTable = ({ data }) => {
               <th>Service Name</th>
               <th>Service Date</th>
               <th>service Price</th>
+              <th>Phone</th>
+              <th>Address</th>
               <th>edit</th>
               <th>Action</th>
             </tr>
@@ -44,6 +46,12 @@ const MyBookingTable = ({ data }) => {
                   </td>
                   <th>
                     <p>${item.service_price}</p>
+                  </th>
+                  <th>
+                    <p>{item.phone}</p>
+                  </th>
+                  <th>
+                    <p>{item.address}</p>
                   </th>
                   <th>
                     <Link
