@@ -1,43 +1,41 @@
 "use client";
+import { PATCH } from "@/app/api/my-bookings/[id]/route";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 
-const CheckOutForm = ({ data }) => {
-  //   console.log(data);
+const BookingUpdateForm = ({ data }) => {
+  console.log(data);
   // const router = useRouter();
   const { data: session } = useSession();
   const [loading, setLoading] = useState(false);
-  const handleBookService = async (e) => {
+  const handleUpdateBooking = async (e) => {
     e.preventDefault();
     const form = e.target;
-    const name = form.name.value;
     const date = form.date.value;
-    const email = form.email.value;
     const phone = form.phone.value;
     const address = form.address.value;
     const bookingPayload = {
-      customerName: name,
       date,
-      email,
       phone,
       address,
-      service_name: data?.title,
-      service_id: data?._id,
-      service_img: data?.img,
-      service_price: data?.price,
+      // service_name: data?.title,
+      // service_id: data?._id,
+      // service_img: data?.img,
+      // service_price: data?.price,
     };
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:3000/api/service", {
-        method: "POST",
-        body: JSON.stringify(bookingPayload),
-      });
+      const res = await fetch(
+        `http://localhost:3000/api/my-bookings/${data._id}`,
+        {
+          method: "PATCH",
+          body: JSON.stringify(bookingPayload),
+        }
+      );
       const postedData = await res.json();
       setLoading(false);
-      toast.success("Order Confirmed");
-      form.reset();
       // console.log(postedData);
       // router.push("/my-bookings");
     } catch (err) {
@@ -47,9 +45,9 @@ const CheckOutForm = ({ data }) => {
   return (
     <div className="w-10/12 mx-auto border p-5 my-5">
       <h1 className="text-center text-4xl font-bold my-4">
-        Book Service : {data?.title}
+        My Bookings : {data?.title}
       </h1>
-      <form onSubmit={handleBookService}>
+      <form onSubmit={handleUpdateBooking}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {/* name */}
           <div className="flex flex-col space-y-1">
@@ -70,7 +68,7 @@ const CheckOutForm = ({ data }) => {
               type="number"
               className="border p-2 rounded-lg"
               name="dueamount"
-              defaultValue={data?.price}
+              defaultValue={data?.service_price}
               readOnly
             />
           </div>
@@ -93,6 +91,7 @@ const CheckOutForm = ({ data }) => {
               type="date"
               className="border p-2 rounded-lg"
               name="date"
+              defaultValue={data?.date}
               required
             />
           </div>
@@ -104,6 +103,7 @@ const CheckOutForm = ({ data }) => {
               className="border p-2 rounded-lg"
               name="phone"
               required
+              defaultValue={data?.phone}
             />
           </div>
           {/* present address */}
@@ -113,6 +113,7 @@ const CheckOutForm = ({ data }) => {
               type="text"
               className="border p-2 rounded-lg"
               name="address"
+              defaultValue={data?.address}
               required
             />
           </div>
@@ -138,4 +139,4 @@ const CheckOutForm = ({ data }) => {
   );
 };
 
-export default CheckOutForm;
+export default BookingUpdateForm;
