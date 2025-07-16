@@ -3,7 +3,7 @@ import MyBookingTable from "@/components/tables/MyBookingTable";
 import { headers } from "next/headers";
 const FetchMyBookings = async () => {
   const res = await fetch("http://localhost:3000/api/service", {
-    headers: headers(),
+    headers: await headers(),
   });
   const bookingData = await res.json();
   // setData(bookingData);
