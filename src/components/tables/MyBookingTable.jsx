@@ -56,7 +56,8 @@ const MyBookingTable = ({ data }) => {
                   <th>
                     <Link
                       href={`/my-bookings/${item._id}`}
-                      className="text-2xl"
+                      className="text-2xl tooltip"
+                      data-tip="update"
                     >
                       <TbEdit />
                     </Link>
